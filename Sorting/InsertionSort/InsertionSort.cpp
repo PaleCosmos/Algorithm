@@ -20,10 +20,11 @@ using namespace std;
 
 void insertionSort(int *arr)
 {
+    int j, key;
+
     for (int i = 1; i < size; i++)
     {
-        int j;
-        int key = arr[i];
+        key = arr[i];
 
         for (j = i - 1; j >= 0 && arr[j] > key; j--)
         {

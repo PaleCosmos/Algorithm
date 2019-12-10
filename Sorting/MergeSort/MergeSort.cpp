@@ -18,23 +18,7 @@
 
 using namespace std;
 
-void bubbleSort(int *arr)
-{
-    int temp, j;
 
-    for (int i = size - 1; i > 0; i--)
-    {
-        for (j = 0; j < i; j++)
-        {
-            if (arr[j] > arr[j + 1])
-            {
-                temp = arr[j];
-                arr[j] = arr[j + 1];
-                arr[j + 1] = temp;
-            }
-        }
-    }
-}
 
 void print(int *arr, string define)
 {
@@ -57,9 +41,14 @@ int main()
 
     print(arr, "Before");
 
-    bubbleSort(arr);
+    mergeSort(arr);
 
     print(arr, "\nAfter");
 
     return 0;
+}
+
+void mergeSort(int *arr)
+{
+
 }

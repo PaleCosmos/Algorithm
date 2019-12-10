@@ -18,20 +18,27 @@
 
 using namespace std;
 
-void bubbleSort(int *arr)
+void selectionSort(int *arr)
 {
-    int temp, j;
+    int min, j, temp;
 
-    for (int i = size - 1; i > 0; i--)
+    for (int i = 0; i < size - 1; i++)
     {
-        for (j = 0; j < i; j++)
+        min = i;
+
+        for (j = i + 1; j < size; j++)
         {
-            if (arr[j] > arr[j + 1])
+            if (arr[j] < arr[min])
             {
-                temp = arr[j];
-                arr[j] = arr[j + 1];
-                arr[j + 1] = temp;
+                min = j;
             }
+        }
+
+        if (i != min)
+        {
+            temp = arr[i];
+            arr[i] = arr[min];
+            arr[min] = temp;
         }
     }
 }
@@ -57,7 +64,7 @@ int main()
 
     print(arr, "Before");
 
-    bubbleSort(arr);
+    selectionSort(arr);
 
     print(arr, "\nAfter");
 
