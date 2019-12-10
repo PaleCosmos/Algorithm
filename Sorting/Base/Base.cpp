@@ -21,7 +21,7 @@ int main()
 
     int* arr = arrData;
 
-    print(arr, "Before");
+    //print(arr, "Before");
 
     start = clock();
 
@@ -29,7 +29,7 @@ int main()
 
     end = clock();
 
-    print(arr, "\nAfter\n");
+    //print(arr, "\nAfter\n");
 
     timeStamp(start, end);
 

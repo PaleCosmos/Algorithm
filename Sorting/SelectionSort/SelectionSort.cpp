@@ -46,7 +46,7 @@ int main()
 
     int *arr = arrData;
 
-    //print(arr, "Before");
+    print(arr, "Before");
 
     start = clock();
 
@@ -54,7 +54,7 @@ int main()
 
     end = clock();
 
-    //print(arr, "\nAfter");
+    print(arr, "\nAfter");
 
     timeStamp(start, end); // 137ms
 
