@@ -18,7 +18,16 @@
 
 using namespace std;
 
+int temps[size];
 
+int devide(int, int);
+void conqurer(int *, int, int);
+void combine(int *, int, int, int);
+
+void mergeSort(int *arr)
+{
+    conqurer(arr, 0, size - 1);
+}
 
 void print(int *arr, string define)
 {
@@ -48,7 +57,59 @@ int main()
     return 0;
 }
 
-void mergeSort(int *arr)
+int devide(int left, int right)
 {
+    return (left + (right - left) / 2);
+}
 
+void conqurer(int *arr, int left, int right)
+{
+    if (left < right)
+    {
+        int mid = devide(left, right);
+
+        conqurer(arr, left, mid);
+        conqurer(arr, mid + 1, right);
+        combine(arr, left, mid, right);
+    }
+}
+
+void combine(int *arr, int left, int mid, int right)
+{
+    int i = left;
+    int j = mid + 1;
+    int k = left;
+    int l;
+
+    while (i <= mid && j <= right)
+    {
+        if (arr[i] <= arr[j])
+        {
+            temps[k++] = arr[i++];
+        }
+        else
+        {
+            temps[k++] = arr[j++];
+        }
+    }
+
+    if (i > mid)
+    {
+        for (l = j; l <= right; l++)
+        {
+            temps[k++] = arr[l];
+        }
+    }
+    else
+    {
+        for (l = i; l <= mid; l++)
+        {
+            temps[k++] = arr[l];
+        }
+    }
+
+    for (l = left; l <= right; l++)
+    {
+        arr[l] = temps[l];
+    }
 }
