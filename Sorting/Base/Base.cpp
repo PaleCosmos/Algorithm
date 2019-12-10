@@ -17,13 +17,21 @@
 
 int main()
 {
+    clock_t start, end;
+
     int* arr = arrData;
 
     print(arr, "Before");
 
+    start = clock();
+
     // Sort(arr);
 
-    print(arr, "\nAfter");
+    end = clock();
+
+    print(arr, "\nAfter\n");
+
+    timeStamp(start, end);
 
     return 0;
 }

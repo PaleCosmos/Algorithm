@@ -35,13 +35,21 @@ void bubbleSort(int *arr)
 
 int main()
 {
-    int* arr = arrData;
+    clock_t start, end;
 
-    print(arr, "Before");
+    int *arr = arrData;
+
+    //print(arr, "Before");
+
+    start = clock();
 
     bubbleSort(arr);
 
-    print(arr, "\nAfter");
+    end = clock();
+
+    //print(arr, "\nAfter");
+
+    timeStamp(start, end); // 339ms
 
     return 0;
 }

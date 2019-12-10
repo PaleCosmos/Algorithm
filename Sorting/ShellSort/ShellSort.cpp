@@ -37,13 +37,21 @@ void shellSort(int *arr)
 
 int main()
 {
-    int* arr = arrData;
+    clock_t start, end;
 
-    print(arr, "Before");
+    int *arr = arrData;
+
+    //print(arr, "Before");
+
+    start = clock();
 
     shellSort(arr);
 
-    print(arr, "\nAfter");
+    end = clock();
+
+    //print(arr, "\nAfter");
+
+    timeStamp(start, end); // 3ms
 
     return 0;
 }
