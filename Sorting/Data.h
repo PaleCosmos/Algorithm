@@ -13,42 +13,24 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 #pragma endregion
-#include "../Data.h"
+#include <iostream>
+#define size 15
 
-void selectionSort(int *arr)
+using namespace std;
+
+int arrData[] = {8, 11, 2, 9, 5, 14, 0, 13, 10, 3, 6, 1, 4, 7, 12};
+
+void print(int *arr, string define)
 {
-    int min, j, temp;
-
-    for (int i = 0; i < size - 1; i++)
+    cout << define << '\n';
+    cout << "[";
+    for (int k = 0; k < size; k++)
     {
-        min = i;
-
-        for (j = i + 1; j < size; j++)
+        cout << arr[k];
+        if (k != size - 1)
         {
-            if (arr[j] < arr[min])
-            {
-                min = j;
-            }
-        }
-
-        if (i != min)
-        {
-            temp = arr[i];
-            arr[i] = arr[min];
-            arr[min] = temp;
+            cout << ",";
         }
     }
-}
-
-int main()
-{
-    int* arr = arrData;
-
-    print(arr, "Before");
-
-    selectionSort(arr);
-
-    print(arr, "\nAfter");
-
-    return 0;
+    cout << "]\n";
 }

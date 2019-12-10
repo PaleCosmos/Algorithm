@@ -13,29 +13,11 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 #pragma endregion
-#include <iostream>
-#define size 15
-
-using namespace std;
-
-void print(int *arr, string define)
-{
-    cout << define << '\n';
-    cout << "[";
-    for (int k = 0; k < size; k++)
-    {
-        cout << arr[k];
-        if (k != size - 1)
-        {
-            cout << ",";
-        }
-    }
-    cout << "]\n";
-}
+#include "../Data.h"
 
 int main()
 {
-    int arr[size]{8, 11, 2, 9, 5, 14, 0, 13, 10, 3, 6, 1, 4, 7, 12};
+    int* arr = arrData;
 
     print(arr, "Before");
 
