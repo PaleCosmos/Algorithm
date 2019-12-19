@@ -25,21 +25,32 @@ struct Node
     Node *last;
 };
 
-void print(Node* head)
+Node *createNewNode(string value)
 {
-    if(head == NULL)
+    Node *temp = (Node *)malloc(sizeof(Node));
+    temp->data = value;
+    temp->last = NULL;
+    temp->next = NULL;
+
+    return temp;
+}
+
+void print(Node *head)
+{
+    cout << "\n";
+
+    if (head == NULL)
     {
-        cout<<"The header is NULL pointer."<<endl;
+        cout << "NULL" << endl;
         return;
     }
 
-    Node * temp = head;
+    Node *temp = head;
 
-    cout<<temp->data;
-    temp = temp->next;
-    while(temp!=NULL)
+    while (temp != NULL)
     {
-        cout<<" -> "<<temp->data;
+        cout << temp->data << " -> ";
         temp = temp->next;
     }
+    cout << "NULL" << endl;
 }
