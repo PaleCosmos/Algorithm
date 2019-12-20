@@ -20,7 +20,6 @@ void addAtLast(NodePtr *, string, int *);
 void addAfterIndexAt(NodePtr *, string, int, int *);
 void removeByIndexAt(NodePtr *, int, int *);
 void removeByValue(NodePtr *, string, int *);
-void sort(NodePtr *);
 
 int main()
 {
@@ -28,7 +27,7 @@ int main()
     int order, at, size = 0;
     string value;
 
-    cout << "Welcome. This is linked list example written in C++.\n"
+    cout << "Welcome. This is single linked list example written in C++.\n"
          << endl;
 
     do
@@ -40,14 +39,13 @@ int main()
         cout << "3) Add after index at..." << endl;
         cout << "4) Remove By Index" << endl;
         cout << "5) Remove By Value" << endl;
-        cout << "6) Sort" << endl;
 
         cin >> order;
 
+        cout << "\n\n"
+             << endl;
         switch (order)
         {
-            cout << "\n\n"
-                 << endl;
         case 1:
             cout << "string value : ";
             cin >> value;
@@ -75,8 +73,6 @@ int main()
             cin >> value;
             removeByValue(&head, value, &size);
             break;
-        case 6:
-            sort(&head);
         default:
             order = -1;
             break;
@@ -161,6 +157,7 @@ void addAfterIndexAt(NodePtr *head, string value, int order, int *size)
             ;
         Node *temp2 = newHead->next;
         newHead->next = temp;
+
         temp->next = temp2;
     }
 
@@ -179,7 +176,18 @@ void removeByIndexAt(NodePtr *head, int order, int *size)
     NodePtr newHead = *head;
     NodePtr temp = NULL;
 
-    for (int i = 0; i < (*size); i++,temp = newHead, newHead = newHead->next);
+    if (order == 0)
+    {
+        *head = (*head)->next;
+    }
+    else
+    {
+        for (int i = 0; i < order; i++, temp = newHead, newHead = newHead->next)
+            ;
+        temp->next = newHead->next;
+    }
+
+    free(newHead);
 
     (*size)--;
 }
@@ -187,12 +195,38 @@ void removeByIndexAt(NodePtr *head, int order, int *size)
 // I used a double pointer to move the head position.
 void removeByValue(NodePtr *head, string value, int *size)
 {
-    // I'll do it tomorrow ~
-    (*size)--;
-}
+    if ((*size) == 0)
+    {
+        cout << "\n[Error] The size is 0.";
+        return;
+    }
 
-// I used a double pointer to move the head position.
-void sort(NodePtr *head)
-{
-    // Simply, I'll use bubble sort.
+    NodePtr newHead = *head;
+    int index = 0, count = 0;
+
+    while (newHead != NULL)
+    {
+        string data = newHead->data;
+        newHead = newHead->next;
+        if (data == value)
+        {
+            count++;
+            removeByIndexAt(head, index, size);
+            index--;
+        }
+        index++;
+    }
+
+    if (count == 0)
+    {
+        cout << "There is no value named \'" << value << "\'." << endl;
+    }
+    else if (count == 1)
+    {
+        cout << 1 << " item is removed." << endl;
+    }
+    else
+    {
+        cout << count << " items are removed." << endl;
+    }
 }
