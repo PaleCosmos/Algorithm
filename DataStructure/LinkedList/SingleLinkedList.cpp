@@ -15,12 +15,12 @@
 #pragma endregion
 #include "../Data.h"
 
-void addAtFirst(Node **, string, int *);
-void addAtLast(Node **, string, int *);
-void addAfterIndexAt(Node **, string, int, int *);
-void removeByIndexAt(Node **, int, int *);
-void removeByValue(Node **, string, int *);
-void sort(Node **);
+void addAtFirst(NodePtr *, string, int *);
+void addAtLast(NodePtr *, string, int *);
+void addAfterIndexAt(NodePtr *, string, int, int *);
+void removeByIndexAt(NodePtr *, int, int *);
+void removeByValue(NodePtr *, string, int *);
+void sort(NodePtr *);
 
 int main()
 {
@@ -90,9 +90,9 @@ int main()
 }
 
 // I used a double pointer to move the head position.
-void addAtFirst(Node **head, string value, int *size)
+void addAtFirst(NodePtr *head, string value, int *size)
 {
-    Node *temp = createNewNode(value);
+    NodePtr temp = createNewNode(value);
 
     // Same as *head != NULL
     if ((*size) != 0)
@@ -105,11 +105,11 @@ void addAtFirst(Node **head, string value, int *size)
     (*size)++;
 }
 
-// We used a double pointer to move the head position.
-void addAtLast(Node **head, string value, int *size)
+// I used a double pointer to move the head position.
+void addAtLast(NodePtr *head, string value, int *size)
 {
-    Node *newHead = *head;
-    Node *temp = createNewNode(value);
+    NodePtr newHead = *head;
+    NodePtr temp = createNewNode(value);
 
     // Same as *head == NULL
     if (*size == 0)
@@ -128,17 +128,17 @@ void addAtLast(Node **head, string value, int *size)
     (*size)++;
 }
 
-// We used a double pointer to move the head position.
-void addAfterIndexAt(Node **head, string value, int order, int *size)
+// I used a double pointer to move the head position.
+void addAfterIndexAt(NodePtr *head, string value, int order, int *size)
 {
-    if ((*size) <= order)
+    if ((*size) <= order || order < 0)
     {
-        cout << "\n[Error] The size is smaller than order.";
+        cout << "\n[Error] Invalid Index";
         return;
     }
 
-    Node *newHead = *head;
-    Node *temp = createNewNode(value);
+    NodePtr newHead = *head;
+    NodePtr temp = createNewNode(value);
 
     if (order == (*size) - 1)
     {
@@ -157,12 +157,8 @@ void addAfterIndexAt(Node **head, string value, int order, int *size)
     }
     else
     {
-        int count = 0;
-        while (count < order)
-        {
-            count++;
-            newHead = newHead->next;
-        }
+        for (int i = 0; i < order; i++, newHead = newHead->next)
+            ;
         Node *temp2 = newHead->next;
         newHead->next = temp;
         temp->next = temp2;
@@ -171,22 +167,32 @@ void addAfterIndexAt(Node **head, string value, int order, int *size)
     (*size)++;
 }
 
-// We used a double pointer to move the head position.
-void removeByIndexAt(Node **head, int order, int *size)
+// I used a double pointer to move the head position.
+void removeByIndexAt(NodePtr *head, int order, int *size)
+{
+    if ((*size) <= order || order < 0)
+    {
+        cout << "\n[Error] Invalid Index.";
+        return;
+    }
+
+    NodePtr newHead = *head;
+    NodePtr temp = NULL;
+
+    for (int i = 0; i < (*size); i++,temp = newHead, newHead = newHead->next);
+
+    (*size)--;
+}
+
+// I used a double pointer to move the head position.
+void removeByValue(NodePtr *head, string value, int *size)
 {
     // I'll do it tomorrow ~
     (*size)--;
 }
 
-// We used a double pointer to move the head position.
-void removeByValue(Node **head, string value, int *size)
-{
-    // I'll do it tomorrow ~
-    (*size)--;
-}
-
-// We used a double pointer to move the head position.
-void sort(Node **head)
+// I used a double pointer to move the head position.
+void sort(NodePtr *head)
 {
     // Simply, I'll use bubble sort.
 }

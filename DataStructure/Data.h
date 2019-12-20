@@ -25,9 +25,11 @@ struct Node
     Node *last;
 };
 
-Node *createNewNode(string value)
+typedef Node *NodePtr;
+
+NodePtr createNewNode(string value)
 {
-    Node *temp = (Node *)malloc(sizeof(Node));
+    NodePtr temp = (NodePtr)malloc(sizeof(Node));
     temp->data = value;
     temp->last = NULL;
     temp->next = NULL;
@@ -35,7 +37,7 @@ Node *createNewNode(string value)
     return temp;
 }
 
-void print(Node *head)
+void print(NodePtr head)
 {
     cout << "\n";
 
@@ -45,7 +47,7 @@ void print(Node *head)
         return;
     }
 
-    Node *temp = head;
+    NodePtr temp = head;
 
     while (temp != NULL)
     {
