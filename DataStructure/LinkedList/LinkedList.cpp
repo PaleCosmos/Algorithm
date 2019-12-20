@@ -15,30 +15,36 @@
 #pragma endregion
 #include "../Data.h"
 
-void addAtFirst(NodePtr *, string, int *);
-void addAtLast(NodePtr *, string, int *);
-void addAfterIndexAt(NodePtr *, string, int, int *);
-void removeByIndexAt(NodePtr *, int, int *);
-void removeByValue(NodePtr *, string, int *);
+void addAtFirst(NodePtr *, NodePtr *, string, int *);
+void addAtLast(NodePtr *, NodePtr *, string, int *);
+void addAfterIndexAt(NodePtr *, NodePtr *, string, int, int *);
+void removeByIndexAt(NodePtr *, NodePtr *, int, int *);
+void removeByValueAtAll(NodePtr *, NodePtr *, string, int *);
+void removeByValueAtFirst(NodePtr *, NodePtr *, string, int *);
+void removeByValueAtLast(NodePtr *, NodePtr *, string, int *);
 
 int main()
 {
     Node *head = NULL;
+    Node *tail = NULL;
     int order, at, size = 0;
     string value;
 
-    cout << "Welcome. This is single linked list example written in C++.\n"
+    cout << "Welcome. This is linked list example written in C++.\n"
          << endl;
 
     do
     {
         print(head);
+        managePointer(head, tail);
         cout << "size : " << size << endl;
-        cout << "1) Add At First" << endl;
-        cout << "2) Add At Last" << endl;
+        cout << "1) Add at first" << endl;
+        cout << "2) Add at last" << endl;
         cout << "3) Add after index at..." << endl;
-        cout << "4) Remove By Index" << endl;
-        cout << "5) Remove By Value" << endl;
+        cout << "4) Remove by index" << endl;
+        cout << "5) Remove by value at all" << endl;
+        cout << "6) Remove by value at first" << endl;
+        cout << "7) Remove by value at last" << endl;
 
         cin >> order;
 
@@ -49,29 +55,39 @@ int main()
         case 1:
             cout << "string value : ";
             cin >> value;
-            addAtFirst(&head, value, &size);
+            addAtFirst(&head, &tail, value, &size);
             break;
         case 2:
             cout << "string value : ";
             cin >> value;
-            addAtLast(&head, value, &size);
+            addAtLast(&head, &tail, value, &size);
             break;
         case 3:
             cout << "string value : ";
             cin >> value;
             cout << "order : ";
             cin >> order;
-            addAfterIndexAt(&head, value, order, &size);
+            addAfterIndexAt(&head, &tail, value, order, &size);
             break;
         case 4:
             cout << "order : ";
             cin >> order;
-            removeByIndexAt(&head, order, &size);
+            removeByIndexAt(&head, &tail, order, &size);
             break;
         case 5:
             cout << "string value : ";
             cin >> value;
-            removeByValue(&head, value, &size);
+            removeByValueAtAll(&head, &tail, value, &size);
+            break;
+        case 6:
+            cout << "string value : ";
+            cin >> value;
+            removeByValueAtFirst(&head, &tail, value, &size);
+            break;
+        case 7:
+            cout << "string value : ";
+            cin >> value;
+            removeByValueAtLast(&head, &tail, value, &size);
             break;
         default:
             order = -1;
@@ -86,14 +102,19 @@ int main()
 }
 
 // I used a double pointer to move the head position.
-void addAtFirst(NodePtr *head, string value, int *size)
+void addAtFirst(NodePtr *head, NodePtr *tail, string value, int *size)
 {
     NodePtr temp = createNewNode(value);
 
     // Same as *head != NULL
     if ((*size) != 0)
     {
+        (*head)->last = temp;
         temp->next = *head;
+    }
+    else
+    {
+        *tail = temp;
     }
 
     *head = temp;
@@ -102,7 +123,7 @@ void addAtFirst(NodePtr *head, string value, int *size)
 }
 
 // I used a double pointer to move the head position.
-void addAtLast(NodePtr *head, string value, int *size)
+void addAtLast(NodePtr *head, NodePtr *tail, string value, int *size)
 {
     NodePtr newHead = *head;
     NodePtr temp = createNewNode(value);
@@ -111,6 +132,7 @@ void addAtLast(NodePtr *head, string value, int *size)
     if (*size == 0)
     {
         *head = temp;
+        *tail = temp;
     }
     else
     {
@@ -118,14 +140,17 @@ void addAtLast(NodePtr *head, string value, int *size)
         {
             newHead = newHead->next;
         }
+
+        temp->last = newHead;
         newHead->next = temp;
+        *tail = temp;
     }
 
     (*size)++;
 }
 
 // I used a double pointer to move the head position.
-void addAfterIndexAt(NodePtr *head, string value, int order, int *size)
+void addAfterIndexAt(NodePtr *head, NodePtr *tail, string value, int order, int *size)
 {
     if ((*size) <= order || order < 0)
     {
@@ -148,8 +173,10 @@ void addAfterIndexAt(NodePtr *head, string value, int order, int *size)
             {
                 newHead = newHead->next;
             }
+            temp->last = newHead;
             newHead->next = temp;
         }
+        *tail = temp;
     }
     else
     {
@@ -157,15 +184,17 @@ void addAfterIndexAt(NodePtr *head, string value, int order, int *size)
             ;
         Node *temp2 = newHead->next;
         newHead->next = temp;
+        temp->last = newHead;
 
         temp->next = temp2;
+        temp2->last = temp;
     }
 
     (*size)++;
 }
 
 // I used a double pointer to move the head position.
-void removeByIndexAt(NodePtr *head, int order, int *size)
+void removeByIndexAt(NodePtr *head, NodePtr *tail, int order, int *size)
 {
     if ((*size) <= order || order < 0)
     {
@@ -179,12 +208,31 @@ void removeByIndexAt(NodePtr *head, int order, int *size)
     if (order == 0)
     {
         *head = (*head)->next;
+        if ((*head) != NULL)
+        {
+            (*head)->last = NULL;
+        }
+        else
+        {
+            (*tail) = NULL;
+        }
     }
     else
     {
-        for (int i = 0; i < order; i++, temp = newHead, newHead = newHead->next)
-            ;
-        temp->next = newHead->next;
+        if (order == (*size) - 1)
+        {
+            newHead = *tail;
+
+            (*tail)->last->next = NULL;
+            (*tail) = (*tail)->last;
+        }
+        else
+        {
+            for (int i = 0; i < order; i++, temp = newHead, newHead = newHead->next)
+                ;
+            temp->next = newHead->next;
+            newHead->next->last = temp;
+        }
     }
 
     free(newHead);
@@ -193,7 +241,7 @@ void removeByIndexAt(NodePtr *head, int order, int *size)
 }
 
 // I used a double pointer to move the head position.
-void removeByValue(NodePtr *head, string value, int *size)
+void removeByValueAtAll(NodePtr *head, NodePtr *tail, string value, int *size)
 {
     if ((*size) == 0)
     {
@@ -211,7 +259,7 @@ void removeByValue(NodePtr *head, string value, int *size)
         if (data == value)
         {
             count++;
-            removeByIndexAt(head, index, size);
+            removeByIndexAt(head, tail, index, size);
             index--;
         }
         index++;
@@ -228,5 +276,76 @@ void removeByValue(NodePtr *head, string value, int *size)
     else
     {
         cout << count << " items are removed." << endl;
+    }
+}
+
+void removeByValueAtFirst(NodePtr *head, NodePtr *tail, string value, int *size)
+{
+    if ((*size) == 0)
+    {
+        cout << "\n[Error] The size is 0.";
+        return;
+    }
+
+    NodePtr newHead = *head;
+    int index = 0;
+    bool isExist = false;
+
+    while (newHead != NULL)
+    {
+        string data = newHead->data;
+        newHead = newHead->next;
+        if (data == value)
+        {
+            isExist = true;
+            removeByIndexAt(head, tail, index, size);
+            break;
+        }
+        index++;
+    }
+
+    if (!isExist)
+    {
+        cout << "There is no value named \'" << value << "\'." << endl;
+    }
+    else
+    {
+        cout << "The first items is removed." << endl;
+    }
+}
+
+void removeByValueAtLast(NodePtr *head, NodePtr *tail, string value, int *size)
+{
+
+    if ((*size) == 0)
+    {
+        cout << "\n[Error] The size is 0.";
+        return;
+    }
+
+    NodePtr newTail = *tail;
+    int index = (*size) - 1;
+    bool isExist = false;
+
+    while (newTail != NULL)
+    {
+        string data = newTail->data;
+        newTail = newTail->last;
+        if (data == value)
+        {
+            isExist = true;
+            removeByIndexAt(head, tail, index, size);
+            break;
+        }
+        index--;
+    }
+
+    if (!isExist)
+    {
+        cout << "There is no value named \'" << value << "\'." << endl;
+    }
+    else
+    {
+        cout << "The last items is removed." << endl;
     }
 }

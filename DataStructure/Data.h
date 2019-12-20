@@ -37,6 +37,32 @@ NodePtr createNewNode(string value)
     return temp;
 }
 
+void managePointer(NodePtr head, NodePtr tail)
+{
+    string headStr, tailStr;
+
+    if (head == NULL)
+    {
+        headStr = "NULL";
+    }
+    else
+    {
+        headStr = head->data;
+    }
+
+    if (tail == NULL)
+    {
+        tailStr = "NULL";
+    }
+    else
+    {
+        tailStr = tail->data;
+    }
+
+    cout << "Head : " << headStr << endl;
+    cout << "Tail : " << tailStr << endl;
+}
+
 void print(NodePtr head)
 {
     cout << "\n";
@@ -49,9 +75,10 @@ void print(NodePtr head)
 
     NodePtr temp = head;
 
+    cout << "NULL <-> ";
     while (temp != NULL)
     {
-        cout << temp->data << " -> ";
+        cout << temp->data << " <-> ";
         temp = temp->next;
     }
     cout << "NULL" << endl;
