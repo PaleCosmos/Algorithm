@@ -65,14 +65,14 @@ int main()
         case 3:
             cout << "string value : ";
             cin >> value;
-            cout << "order : ";
-            cin >> order;
-            addAfterIndexAt(&head, &tail, value, order, &size);
+            cout << "position : ";
+            cin >> at;
+            addAfterIndexAt(&head, &tail, value, at, &size);
             break;
         case 4:
-            cout << "order : ";
-            cin >> order;
-            removeByIndexAt(&head, &tail, order, &size);
+            cout << "position : ";
+            cin >> at;
+            removeByIndexAt(&head, &tail, at, &size);
             break;
         case 5:
             cout << "string value : ";
@@ -150,9 +150,9 @@ void addAtLast(NodePtr *head, NodePtr *tail, string value, int *size)
 }
 
 // I used a double pointer to move the head position.
-void addAfterIndexAt(NodePtr *head, NodePtr *tail, string value, int order, int *size)
+void addAfterIndexAt(NodePtr *head, NodePtr *tail, string value, int at, int *size)
 {
-    if ((*size) <= order || order < 0)
+    if ((*size) <= at || at < 0)
     {
         cout << "\n[Error] Invalid Index";
         return;
@@ -161,9 +161,9 @@ void addAfterIndexAt(NodePtr *head, NodePtr *tail, string value, int order, int 
     NodePtr newHead = *head;
     NodePtr temp = createNewNode(value);
 
-    if (order == (*size) - 1)
+    if (at == (*size) - 1)
     {
-        if (order == 0)
+        if (at == 0)
         {
             *head = temp;
         }
@@ -180,7 +180,7 @@ void addAfterIndexAt(NodePtr *head, NodePtr *tail, string value, int order, int 
     }
     else
     {
-        for (int i = 0; i < order; i++, newHead = newHead->next)
+        for (int i = 0; i < at; i++, newHead = newHead->next)
             ;
         Node *temp2 = newHead->next;
         newHead->next = temp;
@@ -194,9 +194,9 @@ void addAfterIndexAt(NodePtr *head, NodePtr *tail, string value, int order, int 
 }
 
 // I used a double pointer to move the head position.
-void removeByIndexAt(NodePtr *head, NodePtr *tail, int order, int *size)
+void removeByIndexAt(NodePtr *head, NodePtr *tail, int at, int *size)
 {
-    if ((*size) <= order || order < 0)
+    if ((*size) <= at || at < 0)
     {
         cout << "\n[Error] Invalid Index.";
         return;
@@ -205,7 +205,7 @@ void removeByIndexAt(NodePtr *head, NodePtr *tail, int order, int *size)
     NodePtr newHead = *head;
     NodePtr temp = NULL;
 
-    if (order == 0)
+    if (at == 0)
     {
         *head = (*head)->next;
         if ((*head) != NULL)
@@ -219,7 +219,7 @@ void removeByIndexAt(NodePtr *head, NodePtr *tail, int order, int *size)
     }
     else
     {
-        if (order == (*size) - 1)
+        if (at == (*size) - 1)
         {
             newHead = *tail;
 
@@ -228,7 +228,7 @@ void removeByIndexAt(NodePtr *head, NodePtr *tail, int order, int *size)
         }
         else
         {
-            for (int i = 0; i < order; i++, temp = newHead, newHead = newHead->next)
+            for (int i = 0; i < at; i++, temp = newHead, newHead = newHead->next)
                 ;
             temp->next = newHead->next;
             newHead->next->last = temp;
