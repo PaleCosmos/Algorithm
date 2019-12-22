@@ -214,17 +214,129 @@ func addAfterIndexAt(head **Node, tail **Node, value string, at int, size *int) 
 }
 
 func removeByIndexAt(head **Node, tail **Node, at int, size *int) {
+	if *size <= at || at < 0 {
+		fmt.Printf("\n[Error] Invalid Index.")
+		return
+	}
 
+	newHead := *head
+	var temp *Node = nil
+
+	if at == 0 {
+		(*head) = (**head).next
+		if (*head) != nil {
+			(**head).last = nil
+		} else {
+			(*tail) = nil
+		}
+	} else {
+		if at == *size-1 {
+			newHead = (*tail)
+
+			(*(**tail).last).next = nil
+			(*tail) = (**tail).last
+		} else {
+			for i := 0; i < at; i++ {
+				temp = newHead
+				newHead = (*newHead).next
+			}
+
+			(*temp).next = (*newHead).next
+			(*(*newHead).next).last = temp
+		}
+	}
+
+	// Go language has Garbage Collector.
+	newHead = nil
+
+	(*size)--
 }
 
 func removeByValueAtAll(head **Node, tail **Node, value string, size *int) {
+	if *size == 0 {
+		fmt.Printf("\n[Error] The size is 0.")
+		return
+	}
 
+	newHead := *head
+	index := 0
+	count := 0
+
+	for newHead != nil {
+		data := (*newHead).data
+		newHead = (*newHead).next
+
+		if data == value {
+			count++
+			removeByIndexAt(head, tail, index, size)
+			index--
+		}
+		index++
+	}
+
+	if count == 0 {
+		fmt.Println("There is no value named '" + value + "'.")
+	} else if count == 1 {
+		fmt.Println("1 item is removed.")
+	} else {
+		fmt.Println(strconv.Itoa(count) + " items are removed.")
+	}
 }
 
 func removeByValueAtFirst(head **Node, tail **Node, value string, size *int) {
+	if *size == 0 {
+		fmt.Printf("\n[Error] The size is 0.")
+		return
+	}
 
+	newHead := *head
+	index := 0
+	isExist := false
+
+	for newHead != nil {
+		data := (*newHead).data
+		newHead = (*newHead).next
+
+		if data == value {
+			isExist = true
+			removeByIndexAt(head, tail, index, size)
+			break
+		}
+		index++
+	}
+
+	if !isExist {
+		fmt.Println("There is no value named '" + value + "'.")
+	} else {
+		fmt.Println("The first item is removed.")
+	}
 }
 
 func removeByValueAtLast(head **Node, tail **Node, value string, size *int) {
+	if *size == 0 {
+		fmt.Printf("\n[Error] The size is 0.")
+		return
+	}
 
+	newTail := *tail
+	index := (*size) - 1
+	isExist := false
+
+	for newTail != nil {
+		data := (*newTail).data
+		newTail = (*newTail).last
+
+		if data == value {
+			isExist = true
+			removeByIndexAt(head, tail, index, size)
+			break
+		}
+		index--
+	}
+
+	if !isExist {
+		fmt.Println("There is no value named '" + value + "'.")
+	} else {
+		fmt.Println("The first item is removed.")
+	}
 }
