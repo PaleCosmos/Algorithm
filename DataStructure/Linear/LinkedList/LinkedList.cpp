@@ -25,8 +25,8 @@ void removeByValueAtLast(NodePtr *, NodePtr *, string, int *);
 
 int main()
 {
-    Node *head = NULL;
-    Node *tail = NULL;
+    NodePtr head = NULL;
+    NodePtr tail = NULL;
     int order, at, size = 0;
     string value;
 

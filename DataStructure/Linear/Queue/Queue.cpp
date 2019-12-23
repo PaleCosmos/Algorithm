@@ -15,17 +15,17 @@
 #pragma endregion
 #include "../Data.h"
 
-void push(NodePtr *, NodePtr *, string, int *);
-void pop(NodePtr *, NodePtr *, int *);
+void enqueue(NodePtr *, NodePtr *, string, int *);
+void dequeue(NodePtr *, NodePtr *, int *);
 
 int main()
 {
-    Node *head = NULL;
-    Node *tail = NULL;
+    NodePtr head = NULL;
+    NodePtr tail = NULL;
     int order, size = 0;
     string value;
 
-    cout << "Welcome. This is stack example written in C++.\n"
+    cout << "Welcome. This is queue example written in C++.\n"
          << endl;
 
     do
@@ -33,8 +33,8 @@ int main()
         print(head);
         managePointer(head, tail);
         cout << "size : " << size << endl;
-        cout << "1) Push" << endl;
-        cout << "2) Pop" << endl;
+        cout << "1) Enqueue" << endl;
+        cout << "2) Dequeue" << endl;
 
         cin >> order;
 
@@ -45,10 +45,10 @@ int main()
         case 1:
             cout << "string value : ";
             cin >> value;
-            push(&head, &tail, value, &size);
+            enqueue(&head, &tail, value, &size);
             break;
         case 2:
-            pop(&head, &tail, &size);
+            dequeue(&head, &tail, &size);
             break;
         default:
             order = -1;
@@ -62,7 +62,7 @@ int main()
     return 0;
 }
 
-void push(NodePtr *head, NodePtr *tail, string value, int *size)
+void enqueue(NodePtr *head, NodePtr *tail, string value, int *size)
 {
     NodePtr temp = createNewNode(value);
 
@@ -73,14 +73,14 @@ void push(NodePtr *head, NodePtr *tail, string value, int *size)
     }
     else
     {
-        (*tail)->next = temp;
-        temp->last = (*tail);
-        (*tail) = temp;
+        temp->next = (*head);
+        (*head)->last = temp;
+        (*head) = temp;
     }
 
     (*size)++;
 }
-void pop(NodePtr *head, NodePtr *tail, int *size)
+void dequeue(NodePtr *head, NodePtr *tail, int *size)
 {
     NodePtr temp = (*tail);
 
