@@ -53,12 +53,22 @@ void managePointer(NodePtr root)
     cout << "Root : " << rootStr << endl;
 }
 
-void print(NodePtr root)
+void print(NodePtr root, int deeps)
 {
-    if(root == NULL)return;
+    if (root == NULL)
+    {
+        cout << "NULL" << endl;
+        return;
+    }
 
-    cout << root->data;
+    //_print(root, 1, 1);
+}
 
-    print(root->left);
-    print(root->right);
+void _print(NodePtr root, int deeps, int floor)
+{
+    if(root == NULL){
+
+    }
+
+ //프린트 이쁘게 하는법 찾기
 }

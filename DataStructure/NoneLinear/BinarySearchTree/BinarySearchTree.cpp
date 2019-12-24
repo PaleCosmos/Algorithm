@@ -15,16 +15,15 @@
 #pragma endregion
 #include "../Data.h"
 
-// 이어서하기@@@@
-void insert(NodePtr *, string, int *);
-NodePtr insertToTree(NodePtr *, string, int *);
-void remove(NodePtr *, string, int *);
-NodePtr removeFromTree(NodePtr *, string, int *);
+void insertValue(NodePtr *, string, int *);
+NodePtr insert(NodePtr *, string, int *, int);
+void removeValue(NodePtr *, string, int *);
+NodePtr remove(NodePtr *, string, int *, bool *);
 
 int main()
 {
     NodePtr root = NULL;
-    int order, childSize = 0;
+    int order, deeps = 0;
     string value;
 
     cout << "Welcome. This is binary search tree example written in C++.\n"
@@ -32,11 +31,12 @@ int main()
 
     do
     {
-        print(root);
+        print(root, deeps);
+        cout << "\n";
         managePointer(root);
-        cout << "size : " << childSize << endl;
-        cout << "1) A" << endl;
-        cout << "2) B" << endl;
+        cout << "deeps : " << deeps << endl;
+        cout << "1) Insert Node" << endl;
+        cout << "2) Remove Node" << endl;
 
         cin >> order;
 
@@ -44,6 +44,16 @@ int main()
              << endl;
         switch (order)
         {
+        case 1:
+            cout << "string value : ";
+            cin >> value;
+            insertValue(&root, value, &deeps);
+            break;
+        case 2:
+            cout << "string value : ";
+            cin >> value;
+            remove(&root, value, &deeps, 0);
+            break;
         default:
             order = -1;
             break;
@@ -54,4 +64,57 @@ int main()
 
     cout << "Process Exit" << endl;
     return 0;
+}
+
+void insertValue(NodePtr *root, string value, int *deeps)
+{
+    insert(root, value, deeps, 0);
+}
+
+NodePtr insert(NodePtr *root, string value, int *deeps, int floor)
+{
+    if (*root == NULL)
+    {
+        *root = createNewNode(value);
+    }
+    else
+    {
+        int flag = (*root)->data.compare(value);
+        if (flag < 0)
+        {
+            (*root)->left = insert(&((*root)->left), value, deeps, floor + 1);
+        }
+        else if (flag > 0)
+        {
+            (*root)->right = insert(&((*root)->right), value, deeps, floor + 1);
+        }
+        else
+        {
+            cout << "The value \'" << value << "\' exists.";
+        }
+    }
+
+    if (*deeps < floor)
+    {
+        (*deeps) = floor;
+    }
+
+    return (*root);
+}
+
+void removeValue(NodePtr *root, string value, int *deeps)
+{
+    bool success = false;
+
+    remove(root, value, deeps, &success);
+
+    if (!success)
+    {
+        cout << "The value \'" << value << "\' doesn\'t exsist.";
+    }
+}
+NodePtr remove(NodePtr *root, string value, int *deeps, bool *floor)
+{
+    //구현하기
+    return NULL;
 }
