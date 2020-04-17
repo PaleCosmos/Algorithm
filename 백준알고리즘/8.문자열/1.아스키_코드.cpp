@@ -13,49 +13,17 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 #pragma endregion
-#define SIZE 10000
 #include <iostream>
 
 using namespace std;
 
-void self(int *arr, int c)
-{
-    int sum = c + 1;
-    int slice = c + 1;
-    int module = 1;
-
-    while ((int)slice / module > 0)
-    {
-        sum += (slice / module) % 10;
-        module *= 10;
-    }
-
-    if (sum < SIZE)
-    {
-        arr[sum - 1]++;
-    }
-
-    if (c < SIZE - 1)
-    {
-        self(arr, c + 1);
-    }
-}
-
 int main()
 {
-    int *arr = new int[SIZE - 1];
+    char n;
 
-    self(arr, 0);
+    cin >> n;
 
-    for (int i = 0; i < SIZE - 1; i++)
-    {
-        if (arr[i] == 0)
-        {
-            cout << (i + 1) << endl;
-        }
-    }
-
-    delete[] arr;
+    cout << (int)n << endl;
 
     return 0;
 }
