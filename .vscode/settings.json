@@ -10,6 +10,8 @@
         "locale": "cpp",
         "memory": "cpp",
         "tuple": "cpp",
-        "utility": "cpp"
+        "utility": "cpp",
+        "string": "cpp",
+        "bitset": "cpp"
     }
 }
