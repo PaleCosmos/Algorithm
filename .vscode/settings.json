@@ -12,6 +12,7 @@
         "tuple": "cpp",
         "utility": "cpp",
         "string": "cpp",
-        "bitset": "cpp"
+        "bitset": "cpp",
+        "algorithm": "cpp"
     }
 }
