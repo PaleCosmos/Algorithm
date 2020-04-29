@@ -15,24 +15,52 @@
 #pragma endregion
 #include <stdio.h>
 
-int main()
+char **c;
+
+void parse(int n, int row, int col, bool t)
 {
-    int arr[4];
-    int min = 1000;
-
-    for (int i = 0; i < 4; i++)
+    if (n == 1)
     {
-        scanf("%d", arr + i);
-        if (i > 1)
-        {
-            arr[i] -= arr[i - 2];
-        }
-
-        if (min > arr[i])
-            min = arr[i];
+        c[row][col] = t ? '*' : ' ';
+        return;
     }
 
-    printf("%d\n", min);
+    int div = n / 3;
 
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            parse(n / 3, row + div * i, col + div * j, t && (i != 1 || j != 1));
+        }
+    }
+}
+
+int main()
+{
+    int i, N;
+
+    scanf("%d", &N);
+
+    c = new char *[N];
+
+    for (i = 0; i < N; i++)
+        c[i] = new char[N];
+
+    parse(N, 0, 0, true);
+
+    for (int j = 0; j < N; j++)
+    {
+        for (int k = 0; k < N; k++)
+        {
+            printf("%c", c[j][k]);
+        }
+        printf("\n");
+    }
+
+    for (i = 0; i < N; i++)
+        delete[] c[i];
+
+    delete[] c;
     return 0;
 }

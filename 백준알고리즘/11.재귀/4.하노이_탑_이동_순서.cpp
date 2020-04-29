@@ -15,24 +15,30 @@
 #pragma endregion
 #include <stdio.h>
 
+void move(int n, int s, int e)
+{
+    if (n ^ 1)
+    {
+        int j = 6 - s - e;
+        move(n - 1, s, j);
+        printf("%d %d\n", s, e);
+        move(n - 1, j, e);
+    }
+    else
+    {
+        printf("%d %d\n", s, e);
+    }
+}
+
 int main()
 {
-    int arr[4];
-    int min = 1000;
+    int N;
 
-    for (int i = 0; i < 4; i++)
-    {
-        scanf("%d", arr + i);
-        if (i > 1)
-        {
-            arr[i] -= arr[i - 2];
-        }
+    scanf("%d", &N);
 
-        if (min > arr[i])
-            min = arr[i];
-    }
+    printf("%d\n", (1 << N) - 1);
 
-    printf("%d\n", min);
+    move(N, 1, 3);
 
     return 0;
 }

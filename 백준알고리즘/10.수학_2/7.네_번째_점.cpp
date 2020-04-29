@@ -15,8 +15,6 @@
 #pragma endregion
 #include <stdio.h>
 
-using namespace std;
-
 int main()
 {
     int xt, yt, x = 0, y = 0, i = 0;

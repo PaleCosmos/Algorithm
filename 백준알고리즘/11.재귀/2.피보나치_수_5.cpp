@@ -15,24 +15,30 @@
 #pragma endregion
 #include <stdio.h>
 
+int *c;
+
+int ft(int n)
+{
+    if (n > 1)
+        c[n] = (c[n - 2] ? c[n - 2] : ft(n - 2)) + (c[n - 1] ? c[n - 1] : ft(n - 1));
+    return c[n];
+}
+
 int main()
 {
-    int arr[4];
-    int min = 1000;
+    int N;
 
-    for (int i = 0; i < 4; i++)
-    {
-        scanf("%d", arr + i);
-        if (i > 1)
-        {
-            arr[i] -= arr[i - 2];
-        }
+    scanf("%d", &N);
 
-        if (min > arr[i])
-            min = arr[i];
-    }
+    c = new int[N + 1];
 
-    printf("%d\n", min);
+    for (int i = 2; i <= N; i++)
+        c[i] = 0;
+    c[1] = 1;
+
+    printf("%d\n", ft(N));
+
+    delete[] c;
 
     return 0;
 }

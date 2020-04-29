@@ -16,8 +16,6 @@
 #include <stdio.h>
 #include <cmath>
 
-using namespace std;
-
 bool isPrime(int n)
 {
     if (n & 1 && n ^ 1)

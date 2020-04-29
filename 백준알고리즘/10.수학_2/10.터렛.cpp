@@ -14,25 +14,44 @@
 //    limitations under the License.
 #pragma endregion
 #include <stdio.h>
+#include <cmath>
+
+int find()
+{
+    int x1, y1, r1, x2, y2, r2;
+    double dist;
+
+    scanf("%d %d %d %d %d %d", &x1, &y1, &r1, &x2, &y2, &r2);
+    dist = sqrt(pow(x1 - x2, 2) + pow(y1 - y2, 2));
+    x1 = r1 + r2;
+    x2 = abs((double)r1 - r2);
+
+    if (dist == 0 && r1 == r2)
+        return -1;
+    else if (dist > x1)
+        return 0;
+    else if (dist == x1)
+        return 1;
+    else if (dist < x2)
+        return 0;
+    else if (dist == x2)
+        return 1;
+    else
+        return 2;
+
+    return 0;
+}
 
 int main()
 {
-    int arr[4];
-    int min = 1000;
+    int t;
 
-    for (int i = 0; i < 4; i++)
+    scanf("%d", &t);
+
+    for (int i = 0; i < t; i++)
     {
-        scanf("%d", arr + i);
-        if (i > 1)
-        {
-            arr[i] -= arr[i - 2];
-        }
-
-        if (min > arr[i])
-            min = arr[i];
+        printf("%d\n", find());
     }
-
-    printf("%d\n", min);
 
     return 0;
 }
