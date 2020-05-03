@@ -6,7 +6,7 @@ Language : C++, Go
 
 # License
 ```
-   Copyright 2019 PaleCosmos
+   Copyright 2020 PaleCosmos
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
