@@ -13,6 +13,7 @@
         "utility": "cpp",
         "string": "cpp",
         "bitset": "cpp",
-        "algorithm": "cpp"
+        "algorithm": "cpp",
+        "sstream": "cpp"
     }
 }
