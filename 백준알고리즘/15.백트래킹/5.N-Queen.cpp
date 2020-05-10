@@ -15,36 +15,54 @@
 #pragma endregion
 #include <stdio.h>
 
-int max, deepth;
-int bt[8];
+int N, tr, fr, count = 0;
+int *bt;
 
-void backTracking(int floor)
+bool isValid(int f)
 {
-    if (floor == deepth)
+    tr = bt[f];
+
+    for (int i = 0; i < f; i++)
     {
-        for (int i = 0; i < deepth; i++)
-        {
-            printf("%d ", bt[i]);
-        }
-        printf("\n");
-        return;
+        fr = bt[i];
+
+        if (tr == fr || ((fr > tr ? fr - tr : tr - fr) == f - i))
+            return false;
     }
 
-    for (int i = 1; i <= max; i++)
+    return true;
+}
+
+void backTracking(int f)
+{
+    if (f == N)
     {
-        bt[floor] = i;
-        if (!floor || bt[floor - 1] <= i)
+        count++;
+    }
+    else
+    {
+        for (int i = 0; i < N; i++)
         {
-            backTracking(floor + 1);
+            bt[f] = i;
+            if (isValid(f))
+            {
+                backTracking(f + 1);
+            }
         }
     }
 }
 
 int main()
 {
-    scanf("%d%d", &max, &deepth);
+    scanf("%d", &N);
+
+    bt = new int[N];
 
     backTracking(0);
+
+    printf("%d\n", count);
+
+    delete[] bt;
 
     return 0;
 }
