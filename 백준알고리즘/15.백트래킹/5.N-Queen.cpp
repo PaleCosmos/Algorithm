@@ -14,95 +14,55 @@
 //    limitations under the License.
 #pragma endregion
 #include <stdio.h>
-#include <stdlib.h>
-#define fl(x) 3 * (int)(x / 3)
 
-int N, count = 0;
-int bt[9][9];
-int bt2[81][2];
+int N, tr, fr, count = 0;
+int *bt;
 
-bool isValid(int floor)
+bool isValid(int f)
 {
-    int *f = bt2[floor];
-    int i, j;
-    int sr = fl(f[0]);
-    int sc = fl(f[1]);
+    tr = bt[f];
 
-    for (i = 0; i < 9; i++)
+    for (int i = 0; i < f; i++)
     {
-        if ((bt[i][f[1]] == bt[f[0]][f[1]] && i != f[0]) || (bt[f[0]][i] == bt[f[0]][f[1]] && i != f[1]))
-        {
-            return false;
-        }
+        fr = bt[i];
 
-        if (i >= sr && i < sr + 3)
-        {
-            for (j = sc; j < sc + 3; j++)
-            {
-                if (bt[i][j] == bt[f[0]][f[1]] && i != f[0] && j != f[1])
-                {
-                    return false;
-                }
-            }
-        }
+        if (tr == fr || ((fr > tr ? fr - tr : tr - fr) == f - i))
+            return false;
     }
 
     return true;
 }
 
-void backTracking(int floor)
+void backTracking(int f)
 {
-    int i, j;
-
-    if (floor == count)
+    if (f == N)
     {
-        for (i = 0; i < 9; i++)
-        {
-            for (j = 0; j < 9; j++)
-            {
-                printf("%d ", bt[i][j]);
-            }
-            printf("\n");
-        }
-
-        exit(0);
+        count++;
     }
     else
     {
-        int *f = bt2[floor];
-
-        for (i = 1; i <= 9; i++)
+        for (int i = 0; i < N; i++)
         {
-            bt[f[0]][f[1]] = i;
-
-            if (isValid(floor))
+            bt[f] = i;
+            if (isValid(f))
             {
-                backTracking(floor + 1);
+                backTracking(f + 1);
             }
         }
-
-        bt[f[0]][f[1]] = 0;
     }
 }
 
 int main()
 {
-    int j, i = 0;
+    scanf("%d", &N);
 
-    for (i = 0; i < 9; i++)
-    {
-        for (j = 0; j < 9; j++)
-        {
-            scanf("%d", &bt[i][j]);
-            if (!bt[i][j])
-            {
-                bt2[count][0] = i;
-                bt2[count++][1] = j;
-            }
-        }
-    }
+    bt = new int[N];
 
     backTracking(0);
+
+    printf("%d\n", count);
+
+    delete[] bt;
 
     return 0;
 }
