@@ -19,42 +19,38 @@
 
 int main()
 {
-    int N, i, j;
-    uint **arr, *t, t1, t2, m = 0;
+    int N;
+    uint **arr, *l, v;
 
     scanf("%d", &N);
 
     arr = new uint *[N];
 
-    for (i = 0; i < N; i++)
+    for (int i = 0; i < N; i++)
     {
-        arr[i] = new uint[i + 1];
-        t = arr[i];
+        arr[i] = new uint[2];
+        l = arr[i];
 
-        for (j = 0; j < i + 1; j++)
+        scanf("%u", &v);
+
+        if (i > 1)
         {
-            scanf("%u", t + j);
+            l[0] = v + arr[i - 1][1];
+            l[1] = v + max(arr[i - 2][0], arr[i - 2][1]);
         }
-
-        if (i)
+        else if (i == 1)
         {
-            t = arr[i - 1];
-            for (j = 0; j < i + 1; j++)
-            {
-                t1 = j > 0 ? t[j - 1] : 0;
-                t2 = j < i ? t[j] : 0;
-
-                arr[i][j] += max(t1, t2);
-
-                if (i == N - 1)
-                {
-                    m = (m < arr[i][j]) ? arr[i][j] : m;
-                }
-            }
+            l[0] = v + arr[i - 1][0];
+            l[1] = v;
+        }
+        else
+        {
+            l[0] = v;
+            l[1] = 0;
         }
     }
 
-    printf("%u\n", m);
+    printf("%u\n", max(arr[N - 1][0], arr[N - 1][1]));
 
     for (int i = 0; i < N; i++)
     {

@@ -15,7 +15,7 @@
 #pragma endregion
 #include <stdio.h>
 #define uint unsigned int
-#define min(x, y) (x) > (y) ? (y) : (x)
+#define min(x, y) ((x) > (y) ? (y) : (x))
 
 int main()
 {
