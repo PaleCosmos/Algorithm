@@ -15,47 +15,40 @@
 #pragma endregion
 #include <stdio.h>
 #define uint unsigned int
-#define max(x, y) ((x) < (y) ? (y) : (x))
+#define max 0xffffffff
+#define min(x, y) ((x) > (y) ? (y) : (x))
 
 int main()
 {
-    int N;
-    uint **arr, *l, v;
+    int i, N;
+    uint *arr, a, b, c, t;
 
     scanf("%d", &N);
 
-    arr = new uint *[N];
+    arr = new uint[N];
+    arr[0] = 0;
 
-    for (int i = 0; i < N; i++)
+    for (i = 1; i < N; i++)
     {
-        arr[i] = new uint[2];
-        l = arr[i];
+        t = i + 1;
+        a = b = c = max;
 
-        scanf("%u", &v);
+        if (t % 3 == 0)
+        {
+            a = arr[t / 3 - 1];
+        }
 
-        if (i > 1)
+        if (t % 2 == 0)
         {
-            l[0] = v + arr[i - 1][1];
-            l[1] = v + max(arr[i - 2][0], arr[i - 2][1]);
+            b = arr[(t >> 1) - 1];
         }
-        else if (i == 1)
-        {
-            l[0] = v + arr[i - 1][0];
-            l[1] = v;
-        }
-        else
-        {
-            l[0] = v;
-            l[1] = 0;
-        }
+
+        c = arr[i - 1];
+
+        arr[i] = 1 + min(a, min(b, c));
     }
 
-    printf("%u\n", max(arr[N - 1][0], arr[N - 1][1]));
-
-    for (int i = 0; i < N; i++)
-    {
-        delete[] arr[i];
-    }
+    printf("%d\n", arr[N - 1]);
 
     delete[] arr;
 
