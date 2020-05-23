@@ -23,7 +23,7 @@ int srt(int *a, int *b)
 
 int main()
 {
-    int N, **arr, i, j;
+    int N, **arr, i, j, max = 1;
 
     scanf("%d", &N);
 
@@ -31,28 +31,30 @@ int main()
 
     for (i = 0; i < N; i++)
     {
-        arr[i] = new int[3];
-        arr[i][2] = 1;
+        arr[i] = new int[2];
         scanf("%d%d", arr[i], arr[i] + 1);
     }
 
     std::sort(arr, arr + N, srt);
 
-    for (i = 0; i < N; i++)
+    for (i = 0; i != N; i++)
     {
-        for (j = 0; j < i; j++)
+        arr[i][0] = 1;
+        for (j = 0; j != i; j++)
         {
             if (arr[i][1] > arr[j][1])
             {
-                if (arr[i][2] <= arr[j][2])
+                if (arr[i][0] <= arr[j][0])
                 {
-                    arr[i][2] = arr[j][2] + 1;
+                    arr[i][0] = arr[j][0] + 1;
+                    if (max < arr[i][0])
+                        max = arr[i][0];
                 }
             }
         }
     }
 
-    printf("%d\n", N - arr[N - 1][2]);
+    printf("%d\n", N - max);
 
     for (i = 0; i < N; i++)
     {
