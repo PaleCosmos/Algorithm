@@ -15,10 +15,7 @@
 #pragma endregion
 #include <stdio.h>
 #include <algorithm>
-#define max(x, y) ((x) > (y) ? (x) : (y))
 
-// 더 알아보기@@@@@@@@
-// dp 방법과 lowerbound에 대해 조사
 int srt(int *a, int *b)
 {
     return a[0] < b[0];
@@ -26,7 +23,7 @@ int srt(int *a, int *b)
 
 int main()
 {
-    int N, i, j, **arr, result = 0;
+    int N, **arr, i, j;
 
     scanf("%d", &N);
 
@@ -35,8 +32,8 @@ int main()
     for (i = 0; i < N; i++)
     {
         arr[i] = new int[3];
-        scanf("%d%d", &arr[i][0], &arr[i][1]);
-        arr[i][2] = 0;
+        arr[i][2] = 1;
+        scanf("%d%d", arr[i], arr[i] + 1);
     }
 
     std::sort(arr, arr + N, srt);
@@ -45,22 +42,24 @@ int main()
     {
         for (j = 0; j < i; j++)
         {
-            if (arr[i][1] > arr[j][1] && arr[i][2] <= arr[j][2])
+            if (arr[i][1] > arr[j][1])
             {
-                arr[i][2] = arr[j][2] + 1;
+                if (arr[i][2] <= arr[j][2])
+                {
+                    arr[i][2] = arr[j][2] + 1;
+                }
             }
         }
-
-        result = max(result, arr[i][2]);
     }
 
-    printf("%d\n", result);
+    printf("%d\n", N - arr[N - 1][2]);
 
     for (i = 0; i < N; i++)
     {
-        delete arr[i];
+        delete[] arr[i];
     }
 
     delete[] arr;
+
     return 0;
 }
