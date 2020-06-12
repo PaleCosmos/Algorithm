@@ -16,7 +16,7 @@
 #include <iostream>
 #include <cstring>
 #define endl '\n'
-#define m(x, y) ((x) > (y) ? (x) : (y))
+#define max(x, y) ((x) > (y) ? (x) : (y))
 
 using namespace std;
 
@@ -26,40 +26,45 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int x, y, **arr, al, bl, max = 0;
-    string A, B;
+    string str1, str2;
+    int len1, len2, **arr, j, i = 0, m = 0;
 
-    cin >> A >> B;
-    al = A.length() + 1;
-    bl = B.length() + 1;
+    cin >> str1 >> str2;
+    len1 = str1.length() + 1;
+    len2 = str2.length() + 1;
 
-    arr = new int *[al];
+    arr = new int *[len1];
 
-    for (x = 0; x < al; x++)
+    for (; i < len1; i++)
     {
-        arr[x] = new int[bl];
-        memset(arr[x], 0, bl);
+        arr[i] = new int[len2];
+        memset(arr[i], 0, len2);
 
-        if (x)
+        if (i)
         {
-            for (y = 1; y < bl; y++)
+            for (j = 1; j < len2; j++)
             {
-                if (A[x - 1] == B[y - 1])
+                if (str1[i - 1] == str2[j - 1])
                 {
-                    arr[x][y] = arr[x - 1][y - 1] + 1;
+                    arr[i][j] = arr[i - 1][j - 1] + 1;
+                    m = m < arr[i][j] ? arr[i][j] : m;
                 }
                 else
                 {
-                    arr[x][y] = m(arr[x - 1][y], arr[x][y - 1]);
+                    arr[i][j] = max(arr[i - 1][j], arr[i][j - 1]);
                 }
-
-                if (arr[x][y] > max)
-                    max = arr[x][y];
             }
         }
     }
 
-    cout << max << endl;
+    cout << m << endl;
+
+    for (i = 0; i < len1; i++)
+    {
+        delete[] arr[i];
+    }
+
+    delete[] arr;
 
     return 0;
 }
