@@ -1,4 +1,4 @@
-# Algorithm Study
+# Algorithm
 
 IDE : Visual Studio Code
 
