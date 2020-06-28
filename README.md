@@ -1,6 +1,6 @@
 # Algorithm
 
-IDE : Visual Studio Code
+IDE : VS Code
 
 Language : C++, Go
 
