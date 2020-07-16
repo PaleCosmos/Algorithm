@@ -1,7 +1,7 @@
 # Algorithm
 
 IDE : VS Code
-컴터
+왜들그리다운돼있어
 
 Language : C++, Go
 
