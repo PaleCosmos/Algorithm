@@ -1,7 +1,7 @@
 # Algorithm
 
 IDE : VS Code
-왜들그리다운돼있어
+뭐가문제야 세이썸띵
 
 Language : C++, Go
 
