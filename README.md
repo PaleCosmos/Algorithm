@@ -1,7 +1,7 @@
 # Algorithm
 
 IDE : VS Code
-뭐가문제야 세이썸띵
+왜들그리재미없어
 
 Language : C++, Go
 
