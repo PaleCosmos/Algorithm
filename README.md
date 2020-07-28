@@ -1,7 +1,6 @@
 # Algorithm
 
 IDE : VS Code
-왜들그리재미없어
 
 Language : C++, Go
 
