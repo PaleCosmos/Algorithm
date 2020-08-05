@@ -3,7 +3,7 @@
 IDE : VS Code
 
 Language : C++, Go
-호이하
+호
 # License
 ```
    Copyright 2020 PaleCosmos
