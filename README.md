@@ -2,7 +2,7 @@
 
 IDE : VS Code
 
-Language : C++, GO
+Language : C++, Go
 
 
 # License
